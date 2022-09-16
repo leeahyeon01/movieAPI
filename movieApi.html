@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //일별 박스 오피스 날짜를 넣으면 박스오피스 항목 데이터를 불러온다.
+      function dailyBoxOffice() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const date = `20220908`; // 오늘 날짜로 하면 검색이 안되고 어제 날짜로 해야 검색이 됨
+        const kobis_url = `http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=${api_key}&targetDt=${date}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`일일 박스 오피스 : `);
+          console.log(apiDat);
+        });
+      }
+      dailyBoxOffice();
+
+      //영화 리스트를 불러온다 순서는 아직 파악 못함 아마도 추측인데 데이터 베이스 입력순으로 내림차순인듯
+      function movieList() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const itemPerPage = "5"; // 불러올 리스트 영화 개수
+        const kobis_url = `https://kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=${api_key}&itemPerPage=${itemPerPage}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`영화 리스트 : `);
+          console.log(apiDat);
+        });
+      }
+      movieList();
+
+      function movieInfo() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const movieCd = "20194376"; // 박스오피스에서 검색한 탑건 매버릭의 moviecd항목 이것을 집어넣어 검색한다.
+        const movieCdKr = "20209343"; // 한산 용의 출현
+        const kobis_url = `http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=${api_key}&movieCd=${movieCdKr}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`영화 정보 : `);
+          console.log(apiDat);
+        });
+      }
+      movieInfo();
+
+      function movieCompList() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const itemPerPage = "100";
+        const kobis_url = `http://kobis.or.kr/kobisopenapi/webservice/rest/company/searchCompanyList.json?key=${api_key}&itemPerPage=${itemPerPage}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`영화사 리스트 : `);
+          console.log(apiDat);
+        });
+      }
+      movieCompList();
+
+      function movieCompInfo() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const compCD = "20104469"; // 영화사 고유번호 이번호로 검색 - 파라마운트
+        const kobis_url = `http://kobis.or.kr/kobisopenapi/webservice/rest/company/searchCompanyInfo.json?key=${api_key}&companyCd=${compCD}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`영화사 정보 : `);
+          console.log(apiDat);
+        });
+      }
+      movieCompInfo();
+
+      function moviePeopleList() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const curPage = "3"; // 리스트 항목에 이걸 넣어서 한번에 최대 100명까지 불러올수있지만 page를 조절해서 더 불러 올 수 있음
+        const itemPerPage = "100";
+        const kobis_url = `	http://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=${api_key}&itemPerPage=${itemPerPage}&curPage=${curPage}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`영화인 리스트 : `);
+          console.log(apiDat);
+        });
+      }
+      moviePeopleList();
+
+      function moviePeopleInfo() {
+        const api_key = "aa4324761ba6a434a3d2fe2c585e03b4";
+        const peopleCD = `10057315`; // 이정재 //"10062025"; //정우성 // "10029474" //박해일
+        const kobis_url = `https://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleInfo.json?key=${api_key}&peopleCd=${peopleCD}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", kobis_url);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const apiDat = request.response;
+          console.log(`영화인 정보 : `);
+          console.log(apiDat);
+        });
+      }
+      moviePeopleInfo();
+    </script>
+  </body>
+</html>
