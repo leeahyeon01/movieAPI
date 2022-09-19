@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function actor(actorName) {
+        let actorInfo = [];
+        const api_KEY = "19d2a86ba729ecb37eccaba04437d50b";
+        const peopleNm = actorName;
+        const api_URL = `http://kobis.or.kr/kobisopenapi/webservice/rest/people/searchPeopleList.json?key=${api_KEY}&peopleNm=${peopleNm}`;
+        const request = new XMLHttpRequest();
+        request.open("GET", api_URL);
+        request.responseType = "json";
+        request.send();
+        request.addEventListener("load", () => {
+          const date = request.response;
+          const information = date.peopleListResult.peopleList;
+
+          console.log(date);
+          // console.log(information);
+          // console.log(peopleNm);
+
+          // 배우이름 검색시 작품이랑 해당 배우만 나오게
+          for (let i = 0; i < information.length; i++) {
+            if (
+              // information[i].peopleNm.length === 2 &&
+              information[i].peopleNm === peopleNm &&
+              information[i].repRoleNm === "배우"
+            ) {
+              console.log(information[i]);
+              console.log(information[i].filmoNames);
+            }
+          }
+        });
+      }
+      actor("정우성");
+    </script>
+  </body>
+</html>
